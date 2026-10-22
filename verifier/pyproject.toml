@@ -1,0 +1,33 @@
+[project]
+name = "ap-verify"
+version = "1.0.0"
+description = "Reference offline verifier for Authority Provenance bundles (format cerydora-proof-bundle, version 1)."
+requires-python = ">=3.11"
+# Ed25519 signature verification only. `cryptography` ships audited wheels
+# on every supported platform; everything else the verifier needs is
+# stdlib. This is the ONLY runtime dependency — the verifier imports
+# nothing from the Cerydora engine and nothing that can reach a network,
+# so a recipient can build and run it offline, without an account or
+# Cerydora's continued existence, indefinitely after a bundle is issued.
+dependencies = [
+    "cryptography>=42",
+]
+
+[project.scripts]
+ap-verify = "ap_verify:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+# Flat single-module layout: the verifier is deliberately one auditable file.
+[tool.setuptools]
+py-modules = ["ap_verify"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

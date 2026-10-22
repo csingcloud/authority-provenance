@@ -1,0 +1,465 @@
+{
+  "entitlement": {
+    "schema": 1,
+    "state": "pre-commercial-dev"
+  },
+  "format": "cerydora-proof-bundle",
+  "format_version": 1,
+  "issuer": {
+    "deployment_id": "dep-trescott-agents-demo-0001",
+    "identity_class": "self-generated",
+    "key_id": "sha256:d2a28ec8581826fbe75abecacc30a0b710a823bb55d3d96f61abb26e0747699f",
+    "public_key": "8b237d788e8eaaef550c6d125823fa45f1fd5fc29b2c88bdf871119471fc1312"
+  },
+  "payload": {
+    "as_of": "2025-10-20T09:00:00.000000Z",
+    "attestations": [
+      {
+        "claim": "Agent alert feed reports no health failure",
+        "claim_id": "CLM-01",
+        "declared_state_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-01",
+        "detail": "no prohibited activity observed across a complete view of the scope",
+        "disposition": "conformant",
+        "evidence_age_hours": "1.0",
+        "evidence_ref": "synthetic://trescott-agents/db5f8cd8858072c0",
+        "expected_source": "entra_directory_telemetry",
+        "expiry_kind": null,
+        "freshness_sla_hours": 24,
+        "instrument": "feed-adapter:synthetic-directory@0.1",
+        "observed_at": "2025-10-20T08:00:00.000000Z",
+        "reason_code": "WITHIN_BOUNDARY",
+        "resolution": null,
+        "source": "entra_directory_telemetry"
+      },
+      {
+        "claim": "Pipeline changes require human approval",
+        "claim_id": "CLM-02",
+        "declared_state_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-02",
+        "detail": "human_approval_required is True as required",
+        "disposition": "conformant",
+        "evidence_age_hours": "2.1",
+        "evidence_ref": "synthetic://trescott-agents/6634c220f14d1c31",
+        "expected_source": "azure_activity_telemetry",
+        "expiry_kind": null,
+        "freshness_sla_hours": 24,
+        "instrument": "feed-adapter:synthetic-activity@0.1",
+        "observed_at": "2025-10-20T06:54:00.000000Z",
+        "reason_code": "WITHIN_BOUNDARY",
+        "resolution": null,
+        "source": "azure_activity_telemetry"
+      },
+      {
+        "claim": "Report extraction is limited to the governed read-only resource",
+        "claim_id": "CLM-03",
+        "declared_state_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-03",
+        "detail": "all observed resource within the authorized scope",
+        "disposition": "conformant",
+        "evidence_age_hours": "2.2",
+        "evidence_ref": "synthetic://trescott-agents/8bf0b4ecde5f012e",
+        "expected_source": "graph_directory_snapshot",
+        "expiry_kind": null,
+        "freshness_sla_hours": 24,
+        "instrument": "feed-adapter:synthetic-graph@0.1",
+        "observed_at": "2025-10-20T06:48:00.000000Z",
+        "reason_code": "WITHIN_BOUNDARY",
+        "resolution": null,
+        "source": "graph_directory_snapshot"
+      },
+      {
+        "claim": "Provider terms attestation is current",
+        "claim_id": "CLM-06",
+        "declared_state_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-06",
+        "detail": "synthetic provider terms attestation remained current",
+        "disposition": "conformant",
+        "evidence_age_hours": "48.0",
+        "evidence_ref": "synthetic://trescott-agents/8e87d08ebc553ff5",
+        "expected_source": "sealed_quarterly_attestation",
+        "expiry_kind": null,
+        "freshness_sla_hours": 2160,
+        "instrument": "attestation:synthetic-provider-terms",
+        "observed_at": "2025-10-18T09:00:00.000000Z",
+        "reason_code": "WITHIN_BOUNDARY",
+        "resolution": null,
+        "source": "sealed_quarterly_attestation"
+      }
+    ],
+    "authorization_snapshot": {
+      "approver": {
+        "identity_verified": true,
+        "role": "Chief Information Security Officer (synthetic)"
+      },
+      "authority": {
+        "basis": [
+          "Synthetic Trescott information-security charter",
+          "Synthetic bounded-operation approval procedure TRE-GOV-04"
+        ],
+        "organization": "State of Trescott Department of Transportation (fictional)",
+        "role": "Authorizing official for the fictional bounded operation"
+      },
+      "bounded_operation": {
+        "autonomy_ceiling": "Observe and propose only; governed humans authorize every consequential action.",
+        "environment": "tre-agent-ops-enclave",
+        "in_scope": [
+          "Fictional Trescott agent-operations enclave",
+          "Three registered synthetic non-human actors",
+          "Read-only alert, pipeline-status, and report resources"
+        ],
+        "out_of_scope": [
+          "Production systems or customer environments",
+          "Credential issuance, rotation, or entitlement changes",
+          "Automatic enforcement, remediation, or governed action execution"
+        ],
+        "regulated_data": [
+          "synthetic service metadata",
+          "synthetic operational reports"
+        ],
+        "statement": "Authorize three already-existing non-human actors to perform specified read-only work inside the fictional Trescott agent-operations enclave."
+      },
+      "condition_roster": [
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#activity/ACT-01",
+          "condition_type": "activity_rule",
+          "review_state": "not_evaluated",
+          "summary": "permitted: Triage synthetic service alerts"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#activity/ACT-02",
+          "condition_type": "activity_rule",
+          "review_state": "not_evaluated",
+          "summary": "permitted: Read synthetic pipeline status"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#activity/ACT-03",
+          "condition_type": "activity_rule",
+          "review_state": "not_evaluated",
+          "summary": "permitted: Extract a governed synthetic report"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#activity/ACT-04",
+          "condition_type": "activity_rule",
+          "review_state": "not_evaluated",
+          "summary": "prohibited: Synchronize a legacy directory bridge"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#activity/ACT-05",
+          "condition_type": "activity_rule",
+          "review_state": "not_evaluated",
+          "summary": "prohibited: Modify cloud, identity, pipeline, or repository state"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-01",
+          "condition_type": "evidence_requirement",
+          "review_state": "evaluated",
+          "summary": "Agent alert feed reports no health failure"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-02",
+          "condition_type": "evidence_requirement",
+          "review_state": "evaluated",
+          "summary": "Pipeline changes require human approval"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-03",
+          "condition_type": "evidence_requirement",
+          "review_state": "evaluated",
+          "summary": "Report extraction is limited to the governed read-only resource"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-04",
+          "condition_type": "evidence_requirement",
+          "review_state": "withheld",
+          "summary": "No credential material is detected"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-05",
+          "condition_type": "evidence_requirement",
+          "review_state": "withheld",
+          "summary": "Accountable-owner review is current"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-06",
+          "condition_type": "evidence_requirement",
+          "review_state": "evaluated",
+          "summary": "Provider terms attestation is current"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#claim/CLM-07",
+          "condition_type": "evidence_requirement",
+          "review_state": "not_evaluated",
+          "summary": "Temporary deviations remain within expiry"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#exception/EXC-AGENT-01",
+          "condition_type": "exception",
+          "review_state": "withheld",
+          "summary": "Synthetic transition period for the legacy owner-review cadence. — expires 2025-10-15"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#matrix/credential-material/external-egress",
+          "condition_type": "prohibited_flow",
+          "review_state": "not_evaluated",
+          "summary": "Prohibited flow: Credential material via External egress"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#matrix/credential-material/read-input",
+          "condition_type": "prohibited_flow",
+          "review_state": "not_evaluated",
+          "summary": "Prohibited flow: Credential material via Read-only source input"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#matrix/credential-material/report-output",
+          "condition_type": "prohibited_flow",
+          "review_state": "not_evaluated",
+          "summary": "Prohibited flow: Credential material via Governed report output"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#matrix/credential-material/state-change",
+          "condition_type": "prohibited_flow",
+          "review_state": "not_evaluated",
+          "summary": "Prohibited flow: Credential material via State-changing control plane"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#matrix/service-metadata/external-egress",
+          "condition_type": "prohibited_flow",
+          "review_state": "not_evaluated",
+          "summary": "Prohibited flow: Synthetic service metadata via External egress"
+        },
+        {
+          "condition_ref": "AUTH-TRE-2026-0011@v1.1#matrix/service-metadata/state-change",
+          "condition_type": "prohibited_flow",
+          "review_state": "not_evaluated",
+          "summary": "Prohibited flow: Synthetic service metadata via State-changing control plane"
+        }
+      ],
+      "decision": {
+        "decision_statement": "I authorize the bounded, read-only participation described here, subject to each actor's independent binding and continued evidence-backed reconciliation.",
+        "organization": "State of Trescott Department of Transportation (fictional)",
+        "role_disclaimer": "This record captures a fictional human authority's decision. Cerydora records and evaluates evidence; it does not grant access, authorize on the institution's behalf, or execute remediation.",
+        "status": "active",
+        "title": "Trescott Agent Operations Authorization",
+        "use_case": "Read-only agent support for alert triage, pipeline visibility, and governed report extraction"
+      },
+      "evidence_requirements": [
+        {
+          "claim": "Agent alert feed reports no health failure",
+          "claim_id": "CLM-01",
+          "failure_disposition": "unauthorized",
+          "freshness_sla_hours": 24,
+          "source": "entra_directory_telemetry"
+        },
+        {
+          "claim": "Pipeline changes require human approval",
+          "claim_id": "CLM-02",
+          "failure_disposition": "drifted",
+          "freshness_sla_hours": 24,
+          "source": "azure_activity_telemetry"
+        },
+        {
+          "claim": "Report extraction is limited to the governed read-only resource",
+          "claim_id": "CLM-03",
+          "failure_disposition": "drifted",
+          "freshness_sla_hours": 24,
+          "source": "graph_directory_snapshot"
+        },
+        {
+          "claim": "No credential material is detected",
+          "claim_id": "CLM-04",
+          "failure_disposition": "unauthorized",
+          "freshness_sla_hours": 24,
+          "source": "ghas_push_protection"
+        },
+        {
+          "claim": "Accountable-owner review is current",
+          "claim_id": "CLM-05",
+          "failure_disposition": "drifted",
+          "freshness_sla_hours": 168,
+          "source": "agent_owner_review"
+        },
+        {
+          "claim": "Provider terms attestation is current",
+          "claim_id": "CLM-06",
+          "failure_disposition": "expired",
+          "freshness_sla_hours": 2160,
+          "source": "sealed_quarterly_attestation"
+        },
+        {
+          "claim": "Temporary deviations remain within expiry",
+          "claim_id": "CLM-07",
+          "failure_disposition": "expired",
+          "freshness_sla_hours": 0,
+          "source": "authorization_object_declared_state"
+        }
+      ],
+      "omitted_authorization_categories": [
+        "approver_identity_detail",
+        "authority_name",
+        "boundary_reasoning",
+        "control_requirements",
+        "data_flow_matrix_detail",
+        "disposition_history",
+        "evidence_predicates",
+        "internal_notes",
+        "relationships",
+        "residual_risks"
+      ],
+      "profile": "examiner-core-v1",
+      "schema": 1,
+      "source": {
+        "authorization_id": "AUTH-TRE-2026-0011",
+        "authorization_version": "1.1",
+        "digest": {
+          "algorithm": "sha256",
+          "canonicalization": "cerydora-authorization-json-v1",
+          "digest": "760766c38762324ea3561e6c524bd87775904efd6c472ef2de1a34d34995f298"
+        }
+      },
+      "term": {
+        "effective": "2025-09-01",
+        "expires": "2026-02-28",
+        "reconciliation_cadence": "Daily and on material actor, binding, evidence, or boundary change",
+        "review": "2025-12-01"
+      }
+    },
+    "authorization_snapshot_digest": {
+      "algorithm": "sha256",
+      "canonicalization": "cerydora-authorization-snapshot-v1",
+      "digest": "ca5a689232f4e92aadb58fccfde4331ff3b12a22fac3f94325f8ce08541b63c5"
+    },
+    "authorization_source": {
+      "authorization_id": "AUTH-TRE-2026-0011",
+      "authorization_version": "1.1",
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "cerydora-authorization-json-v1",
+        "digest": "760766c38762324ea3561e6c524bd87775904efd6c472ef2de1a34d34995f298"
+      }
+    },
+    "bundle_id": "BNDL-TRE-2026-0011-0043",
+    "complete_coverage": false,
+    "coverage_gaps": {
+      "activity_conditions_unevaluated": 3,
+      "facts_matching_no_declared_condition": 5,
+      "prohibited_activities_unobservable": 2,
+      "prohibited_activities_untested": 0,
+      "prohibited_matrix_cells_untested": 6,
+      "standing_rule_facts_out_of_bounds": 0,
+      "ungoverned_sources": 0,
+      "unrecognized_flow_labels": 0
+    },
+    "cycle_id": "RC-TRE-AGENTS-2026-10-20",
+    "disclosure": {
+      "boundary": "Disclosure Boundary",
+      "counsel_note": "Retention and discoverability are legal-design decisions pending counsel; this policy is a documented default, not a settled position. Sealing is governed separately from disclosure: the agency's internal ledger retains full integrity including adverse rows.",
+      "policy": {
+        "declare_curation": true,
+        "include_ledger_head_hash": false,
+        "include_ledger_record_count": false,
+        "include_open_finding_breakdown": false,
+        "include_open_finding_counts": true,
+        "include_open_finding_detail": false,
+        "include_resolved_findings": true
+      },
+      "policy_name": "default",
+      "scope_of_withholding": "What is withheld is the substance of unresolved findings — detail, instrument output, and resolution narrative. This is not anonymity: a recipient holding the authorization package has the full claim roster, so a claim absent from this bundle is visibly absent. The count of work in flight is disclosed below.",
+      "statement": "Detection is total; sealing and disclosure are curated. This package contains reproducible control-satisfaction evidence and the resolution record for closed findings. Unresolved findings are live work items, not sealed evidence, and their substance is not packaged."
+    },
+    "evidence_manifest": {
+      "entries": [
+        {
+          "cited_by_claim_ids": [
+            "CLM-01"
+          ],
+          "content_digest": null,
+          "evidence_id": "EVD-19609a3b15ee383a",
+          "freshness_sla_hours": 24,
+          "instrument": "feed-adapter:synthetic-directory@0.1",
+          "observed_at": "2025-10-20T08:00:00.000000Z",
+          "reference": {
+            "kind": "customer-record",
+            "value": "synthetic://trescott-agents/db5f8cd8858072c0"
+          },
+          "source": "entra_directory_telemetry"
+        },
+        {
+          "cited_by_claim_ids": [
+            "CLM-02"
+          ],
+          "content_digest": null,
+          "evidence_id": "EVD-500929e88425d3f8",
+          "freshness_sla_hours": 24,
+          "instrument": "feed-adapter:synthetic-activity@0.1",
+          "observed_at": "2025-10-20T06:54:00.000000Z",
+          "reference": {
+            "kind": "customer-record",
+            "value": "synthetic://trescott-agents/6634c220f14d1c31"
+          },
+          "source": "azure_activity_telemetry"
+        },
+        {
+          "cited_by_claim_ids": [
+            "CLM-06"
+          ],
+          "content_digest": null,
+          "evidence_id": "EVD-6fd7a036736785ae",
+          "freshness_sla_hours": 2160,
+          "instrument": "attestation:synthetic-provider-terms",
+          "observed_at": "2025-10-18T09:00:00.000000Z",
+          "reference": {
+            "kind": "customer-record",
+            "value": "synthetic://trescott-agents/8e87d08ebc553ff5"
+          },
+          "source": "sealed_quarterly_attestation"
+        },
+        {
+          "cited_by_claim_ids": [
+            "CLM-03"
+          ],
+          "content_digest": null,
+          "evidence_id": "EVD-ac255d0d1466785e",
+          "freshness_sla_hours": 24,
+          "instrument": "feed-adapter:synthetic-graph@0.1",
+          "observed_at": "2025-10-20T06:48:00.000000Z",
+          "reference": {
+            "kind": "customer-record",
+            "value": "synthetic://trescott-agents/8bf0b4ecde5f012e"
+          },
+          "source": "graph_directory_snapshot"
+        }
+      ],
+      "profile": "citation-v1",
+      "schema": 1
+    },
+    "generated_at": "2025-10-20T17:00:00.000000Z",
+    "ledger": {
+      "chain_algorithm": "sha256 append-only",
+      "verify": "ok"
+    },
+    "open_findings": [],
+    "payload_schema": 1,
+    "policy": {
+      "declare_curation": true,
+      "include_ledger_head_hash": false,
+      "include_ledger_record_count": false,
+      "include_open_finding_breakdown": false,
+      "include_open_finding_counts": true,
+      "include_open_finding_detail": false,
+      "include_resolved_findings": true
+    },
+    "remediation": [],
+    "synthetic": true,
+    "valid_until": "2025-10-21T06:00:00.000000Z",
+    "view": "examiner",
+    "working_state_summary": {
+      "total": 3
+    }
+  },
+  "seal": {
+    "algorithm": "sha256",
+    "digest": "1b482908cb6faab9205b1f5b88ceaa8167176147f965de4726ba95ab53c8f5ef"
+  },
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "sha256:d2a28ec8581826fbe75abecacc30a0b710a823bb55d3d96f61abb26e0747699f",
+    "signature": "10c954a3771ea91ee83eb16dd843204af261bf07cd2fbac299fcd7ce6c94d095e4d2d1f589bd79c697e47a2361105c3a414064a00c7c3f645211b79fba36fe0f"
+  }
+}

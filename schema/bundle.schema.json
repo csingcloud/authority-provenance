@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cerydora Proof Bundle envelope, format version 1, payload schema 1",
+  "description": "Structural schema for cerydora-proof-bundle v1 (normative text: SPEC.md §5). Validates shape only: the seal and signature are the integrity check and are verified by a conforming verifier, not by this schema. Payload-level objects tolerate additive members (SPEC.md §5.6); the envelope top level and the signature block are closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "format_version", "payload", "issuer", "entitlement", "seal", "signature"],
+  "properties": {
+    "format": {"const": "cerydora-proof-bundle"},
+    "format_version": {"const": 1},
+    "payload": {"$ref": "#/$defs/payload"},
+    "issuer": {"$ref": "#/$defs/issuer"},
+    "entitlement": {"$ref": "#/$defs/entitlement"},
+    "seal": {"$ref": "#/$defs/seal"},
+    "signature": {"$ref": "#/$defs/signature"}
+  },
+  "$defs": {
+    "hex64": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hex128": {"type": "string", "pattern": "^[0-9a-f]{128}$"},
+    "keyId": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "nonemptyString": {"type": "string", "minLength": 1},
+    "timestamp": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$"},
+    "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "decimalString": {"type": "string", "pattern": "^-?[0-9]+(\\.[0-9]+)?([eE][-+]?[0-9]+)?$"},
+    "safeInteger": {"type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991},
+    "stringArray": {"type": "array", "items": {"type": "string"}},
+    "integerCounts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/safeInteger"}},
+    "issuer": {
+      "type": "object",
+      "required": ["deployment_id", "public_key", "key_id", "identity_class"],
+      "properties": {
+        "deployment_id": {"$ref": "#/$defs/nonemptyString"},
+        "public_key": {"$ref": "#/$defs/hex64"},
+        "key_id": {"$ref": "#/$defs/keyId"},
+        "identity_class": {"$ref": "#/$defs/nonemptyString"}
+      }
+    },
+    "entitlement": {
+      "type": "object",
+      "required": ["state", "schema"],
+      "properties": {
+        "state": {"$ref": "#/$defs/nonemptyString"},
+        "schema": {"const": 1}
+      }
+    },
+    "seal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": {"const": "sha256"},
+        "digest": {"$ref": "#/$defs/hex64"}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "key_id", "signature"],
+      "properties": {
+        "algorithm": {"const": "ed25519"},
+        "key_id": {"$ref": "#/$defs/keyId"},
+        "signature": {"$ref": "#/$defs/hex128"}
+      }
+    },
+    "authorizationSource": {
+      "type": "object",
+      "required": ["authorization_id", "authorization_version", "digest"],
+      "properties": {
+        "authorization_id": {"$ref": "#/$defs/nonemptyString"},
+        "authorization_version": {"$ref": "#/$defs/nonemptyString"},
+        "digest": {
+          "type": "object",
+          "required": ["algorithm", "canonicalization", "digest"],
+          "properties": {
+            "algorithm": {"const": "sha256"},
+            "canonicalization": {"const": "cerydora-authorization-json-v1"},
+            "digest": {"$ref": "#/$defs/hex64"}
+          }
+        }
+      }
+    },
+    "snapshotDigest": {
+      "type": "object",
+      "required": ["algorithm", "canonicalization", "digest"],
+      "properties": {
+        "algorithm": {"const": "sha256"},
+        "canonicalization": {"const": "cerydora-authorization-snapshot-v1"},
+        "digest": {"$ref": "#/$defs/hex64"}
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "required": ["schema", "profile", "source", "decision", "authority", "approver", "bounded_operation", "term", "evidence_requirements", "condition_roster", "omitted_authorization_categories"],
+      "properties": {
+        "schema": {"const": 1},
+        "profile": {"const": "examiner-core-v1"},
+        "source": {"$ref": "#/$defs/authorizationSource"},
+        "decision": {
+          "type": "object",
+          "required": ["status", "title", "use_case", "organization", "decision_statement", "role_disclaimer"],
+          "properties": {
+            "status": {"$ref": "#/$defs/nonemptyString"},
+            "title": {"type": "string"},
+            "use_case": {"type": "string"},
+            "organization": {"type": "string"},
+            "decision_statement": {"type": ["string", "null"]},
+            "role_disclaimer": {"type": ["string", "null"]}
+          }
+        },
+        "authority": {
+          "type": "object",
+          "required": ["role", "organization", "basis"],
+          "properties": {
+            "role": {"type": "string"},
+            "organization": {"type": "string"},
+            "basis": {"$ref": "#/$defs/stringArray"}
+          }
+        },
+        "approver": {
+          "type": "object",
+          "required": ["role", "identity_verified"],
+          "properties": {
+            "role": {"type": "string"},
+            "identity_verified": {"type": "boolean"}
+          }
+        },
+        "bounded_operation": {
+          "type": "object",
+          "required": ["statement", "environment", "regulated_data", "in_scope", "out_of_scope", "autonomy_ceiling"],
+          "properties": {
+            "statement": {"type": "string"},
+            "environment": {"type": ["string", "null"]},
+            "regulated_data": {"$ref": "#/$defs/stringArray"},
+            "in_scope": {"$ref": "#/$defs/stringArray"},
+            "out_of_scope": {"$ref": "#/$defs/stringArray"},
+            "autonomy_ceiling": {"type": ["string", "null"]}
+          }
+        },
+        "term": {
+          "type": "object",
+          "required": ["effective", "review", "expires", "reconciliation_cadence"],
+          "properties": {
+            "effective": {"$ref": "#/$defs/date"},
+            "review": {"$ref": "#/$defs/date"},
+            "expires": {"$ref": "#/$defs/date"},
+            "reconciliation_cadence": {"type": ["string", "null"]}
+          }
+        },
+        "evidence_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["claim_id", "claim", "source", "freshness_sla_hours", "failure_disposition"],
+            "properties": {
+              "claim_id": {"$ref": "#/$defs/nonemptyString"},
+              "claim": {"type": "string"},
+              "source": {"type": "string"},
+              "freshness_sla_hours": {"$ref": "#/$defs/safeInteger"},
+              "failure_disposition": {"type": "string"}
+            }
+          }
+        },
+        "condition_roster": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["condition_ref", "condition_type", "summary", "review_state"],
+            "properties": {
+              "condition_ref": {"$ref": "#/$defs/nonemptyString"},
+              "condition_type": {"enum": ["evidence_requirement", "prohibited_flow", "activity_rule", "exception"]},
+              "summary": {"type": "string"},
+              "review_state": {"enum": ["evaluated", "not_evaluated", "withheld"]}
+            }
+          }
+        },
+        "omitted_authorization_categories": {"$ref": "#/$defs/stringArray"}
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "required": ["schema", "profile", "entries"],
+      "properties": {
+        "schema": {"const": 1},
+        "profile": {"const": "citation-v1"},
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["evidence_id", "source", "instrument", "observed_at", "freshness_sla_hours", "reference", "content_digest", "cited_by_claim_ids"],
+            "properties": {
+              "evidence_id": {"type": "string", "pattern": "^EVD-[0-9a-f]{16}$"},
+              "source": {"type": "string"},
+              "instrument": {"type": ["string", "null"]},
+              "observed_at": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+              "freshness_sla_hours": {"oneOf": [{"$ref": "#/$defs/safeInteger"}, {"type": "null"}]},
+              "reference": {
+                "oneOf": [
+                  {"type": "null"},
+                  {"type": "object", "required": ["kind", "value"], "properties": {"kind": {"type": "string"}, "value": {"type": "string"}}}
+                ]
+              },
+              "content_digest": {
+                "oneOf": [
+                  {"type": "null"},
+                  {"type": "object", "required": ["algorithm", "digest"], "properties": {"algorithm": {"const": "sha256"}, "digest": {"$ref": "#/$defs/hex64"}}}
+                ]
+              },
+              "cited_by_claim_ids": {"$ref": "#/$defs/stringArray"}
+            }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["name", "role", "identity_verified", "issuer", "subject_claim", "verified_at", "method"],
+      "properties": {
+        "name": {"type": "string"},
+        "role": {"type": "string"},
+        "identity_verified": {"type": "boolean"},
+        "issuer": {"type": ["string", "null"]},
+        "subject_claim": {"type": ["string", "null"]},
+        "verified_at": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "method": {"type": ["string", "null"]}
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "required": ["claim_id", "status", "action", "disposed_by", "sealed_at", "sealed_record_ref", "note"],
+      "properties": {
+        "claim_id": {"type": "string"},
+        "status": {"enum": ["resolved_sealed", "pending_official_decision"]},
+        "action": {"type": "string"},
+        "disposed_by": {"oneOf": [{"$ref": "#/$defs/provenance"}, {"type": "null"}]},
+        "sealed_at": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "sealed_record_ref": {"type": ["string", "null"]},
+        "note": {"type": ["string", "null"]}
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": ["claim_id", "claim", "disposition", "reason_code", "declared_state_ref", "detail", "expected_source", "source", "instrument", "observed_at", "evidence_ref", "freshness_sla_hours", "evidence_age_hours", "expiry_kind", "resolution"],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/nonemptyString"},
+        "claim": {"type": "string"},
+        "disposition": {"enum": ["conformant", "unauthorized", "drifted", "expired"]},
+        "reason_code": {"type": "string"},
+        "declared_state_ref": {"$ref": "#/$defs/nonemptyString"},
+        "detail": {"type": ["string", "null"]},
+        "expected_source": {"type": ["string", "null"]},
+        "source": {"type": ["string", "null"]},
+        "instrument": {"type": ["string", "null"]},
+        "observed_at": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "evidence_ref": {"type": ["string", "null"]},
+        "freshness_sla_hours": {"oneOf": [{"$ref": "#/$defs/safeInteger"}, {"type": "null"}]},
+        "evidence_age_hours": {"oneOf": [{"$ref": "#/$defs/decimalString"}, {"type": "null"}]},
+        "expiry_kind": {"type": ["string", "null"]},
+        "resolution": {"oneOf": [{"$ref": "#/$defs/resolution"}, {"type": "null"}]}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": ["include_resolved_findings", "include_open_finding_detail", "include_open_finding_counts", "include_open_finding_breakdown", "include_ledger_head_hash", "include_ledger_record_count", "declare_curation"],
+      "properties": {
+        "include_resolved_findings": {"type": "boolean"},
+        "include_open_finding_detail": {"type": "boolean"},
+        "include_open_finding_counts": {"type": "boolean"},
+        "include_open_finding_breakdown": {"type": "boolean"},
+        "include_ledger_head_hash": {"type": "boolean"},
+        "include_ledger_record_count": {"type": "boolean"},
+        "declare_curation": {"type": "boolean"}
+      }
+    },
+    "ledger": {
+      "type": "object",
+      "oneOf": [
+        {"maxProperties": 0},
+        {"required": ["verify", "chain_algorithm"]}
+      ],
+      "properties": {
+        "verify": {"type": "string"},
+        "chain_algorithm": {"type": "string"},
+        "records_verified": {"oneOf": [{"$ref": "#/$defs/safeInteger"}, {"type": "null"}]},
+        "head_hash": {"oneOf": [{"$ref": "#/$defs/hex64"}, {"type": "null"}]}
+      }
+    },
+    "disclosure": {
+      "type": "object",
+      "oneOf": [
+        {"maxProperties": 0},
+        {"required": ["boundary", "statement", "scope_of_withholding", "policy_name", "counsel_note", "policy"]}
+      ],
+      "properties": {
+        "boundary": {"type": "string"},
+        "statement": {"type": "string"},
+        "scope_of_withholding": {"type": "string"},
+        "policy_name": {"type": "string"},
+        "counsel_note": {"type": "string"},
+        "policy": {"$ref": "#/$defs/policy"}
+      }
+    },
+    "payload": {
+      "type": "object",
+      "required": ["payload_schema", "bundle_id", "view", "generated_at", "synthetic", "authorization_source", "authorization_snapshot", "authorization_snapshot_digest", "evidence_manifest", "cycle_id", "as_of", "attestations", "remediation", "open_findings", "working_state_summary", "coverage_gaps", "complete_coverage", "valid_until", "policy", "ledger", "disclosure"],
+      "properties": {
+        "payload_schema": {"const": 1},
+        "bundle_id": {"$ref": "#/$defs/nonemptyString"},
+        "view": {"enum": ["examiner", "internal"]},
+        "generated_at": {"$ref": "#/$defs/timestamp"},
+        "synthetic": {"type": "boolean"},
+        "authorization_source": {"$ref": "#/$defs/authorizationSource"},
+        "authorization_snapshot": {"$ref": "#/$defs/snapshot"},
+        "authorization_snapshot_digest": {"$ref": "#/$defs/snapshotDigest"},
+        "evidence_manifest": {"$ref": "#/$defs/manifest"},
+        "cycle_id": {"$ref": "#/$defs/nonemptyString"},
+        "as_of": {"$ref": "#/$defs/timestamp"},
+        "attestations": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "remediation": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "open_findings": {"type": "array", "items": {"$ref": "#/$defs/entry"}},
+        "working_state_summary": {"$ref": "#/$defs/integerCounts"},
+        "coverage_gaps": {"$ref": "#/$defs/integerCounts"},
+        "complete_coverage": {"type": ["boolean", "null"]},
+        "valid_until": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "policy": {"$ref": "#/$defs/policy"},
+        "ledger": {"$ref": "#/$defs/ledger"},
+        "disclosure": {"$ref": "#/$defs/disclosure"}
+      }
+    }
+  }
+}

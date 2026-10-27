@@ -28,6 +28,3 @@ build-backend = "setuptools.build_meta"
 # Flat single-module layout: the verifier is deliberately one auditable file.
 [tool.setuptools]
 py-modules = ["ap_verify"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]

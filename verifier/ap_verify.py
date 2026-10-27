@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Reference verifier for Authority Provenance bundles.
 
-Implements Authority Provenance bundle v0.1 (SPEC.md and FORMAT.md), format
+Implements Authority Provenance bundle v0.1.1 (SPEC.md and FORMAT.md), format
 `cerydora-proof-bundle`,
-version 1 (hybrid payload schema 1), from the specification alone. This
+version 1 (payload schema 1), from the specification alone. This
 tool deliberately imports NOTHING from the Cerydora engine and nothing
 that can reach a network: verification works offline, without an account,
 a subscription, or Cerydora's continued existence, indefinitely after a
@@ -934,7 +934,7 @@ def main(argv=None) -> int:
     prog = program_name()
     parser = argparse.ArgumentParser(
         prog=prog,
-        description="Authority Provenance bundle v0.1; see SPEC.md and FORMAT.md.",
+        description="Authority Provenance bundle v0.1.1; see SPEC.md and FORMAT.md.",
     )
     parser.add_argument("bundle", help="path to the sealed bundle JSON file")
     parser.add_argument(

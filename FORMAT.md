@@ -1,4 +1,4 @@
-# Authority Provenance bundle v0.1 — field tables and test vectors
+# Authority Provenance bundle v0.1.1 — field tables and test vectors
 
 **Companion to `SPEC.md`.** License: CC BY 4.0 (`LICENSE-SPEC`).
 
@@ -310,6 +310,21 @@ record activity. The absence of either is a policy decision, not an error.
 Either empty (`{}`) or the curation declaration: `boundary`, `statement`,
 `scope_of_withholding`, `policy_name`, `counsel_note` (strings) and `policy`
 (object, §1.9 shape).
+
+### 1.12 Optional members a verifier may read
+
+Three payload members are not part of payload schema 1 and are not required
+by it: `principal_results`, `execution_results` and `revalidation_results`.
+Version 0.1 does not specify their contents. A bundle that carries none of
+them conforms; no example in this package carries them.
+
+A verifier MAY read each one and, when it is present as an array, report it
+verbatim as an additive member (`SPEC.md` §5.6). A verifier MUST NOT require
+them, MUST NOT treat their absence as an error, and MUST NOT let them change
+any of the four results or the exit code (`SPEC.md` §7). The reference
+verifier reports a member that is absent, or present but not an array, as
+`not-included` in its text report and as `null` in its `--json` output. Like
+every payload member, each is included in the digest.
 
 ## 2. Test vectors
 

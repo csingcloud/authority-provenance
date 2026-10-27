@@ -1,6 +1,6 @@
-# Authority Provenance bundle v0.1
+# Authority Provenance bundle v0.1.1
 
-**Version:** 0.1 (staging draft, 2026-10-08) · **Editor:** Cliff Singletary
+**Version:** 0.1.1 (2026-10-25; changes in §12) · **Editor:** Cliff Singletary
 (Cerydora LLC) · **License:** CC BY 4.0 for this text (`LICENSE-SPEC`);
 Apache-2.0 for the schema and the reference verifier (`LICENSE`).
 **Companion:** *Authority Provenance: Standing of Delegated Authority Behind
@@ -259,6 +259,9 @@ canonical serialization, seal or signing input, algorithms, the top-level
 member set, or the meaning of an existing envelope member requires a new
 `format_version`. Algorithms are fixed per version; there is no negotiation.
 
+`FORMAT.md` §1.12 names three optional payload members that a verifier may
+read and report and must not require.
+
 ## 6. Determinations and evaluation states
 
 ### 6.1 Determination values carried in version 0.1
@@ -470,3 +473,12 @@ a compliance determination.
 - Singletary, C. *Authority Provenance: Standing of Delegated Authority
   Behind Non-Person Actor Actions*, v0.3, 2026-10-02.
   doi:10.5281/zenodo.23105657.
+
+## 12. Changes
+
+- **v0.1.1** (2026-10-25). Editorial. `FORMAT.md` §1.12 names the optional
+  payload members the reference verifier reads, and §5.6 points to it. The
+  reference verifier's docstring no longer uses an undefined term, and its
+  `pyproject.toml` no longer names a `tests/` path the package does not ship
+  (issue #1). No change to the format, the record's assertions (§3), the
+  verification procedure (§7), any result or any example.

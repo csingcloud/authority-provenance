@@ -16,7 +16,7 @@ force when the actor acted, and how each declared condition was judged.
 
 | Path | What it is | License |
 |---|---|---|
-| [`SPEC.md`](SPEC.md) | The specification, version 0.1: what a record asserts, the record format, and the verification procedure | CC BY 4.0 |
+| [`SPEC.md`](SPEC.md) | The specification, version 0.1.1: what a record asserts, the record format, and the verification procedure | CC BY 4.0 |
 | [`FORMAT.md`](FORMAT.md) | Field tables for every payload member, and test vectors for serialization, seal and signature | CC BY 4.0 |
 | [`schema/bundle.schema.json`](schema/bundle.schema.json) | JSON Schema for the record's structure | Apache-2.0 |
 | [`verifier/`](verifier/) | Reference verifier, `ap-verify`: one Python file, offline, one dependency | Apache-2.0 |
@@ -37,7 +37,8 @@ produce.
 
 ## Status
 
-Version 0.1 is a draft. Comments are welcome as issues. The companion control
+Version 0.1.1 is a draft; it changes v0.1 editorially only (`SPEC.md` §12).
+Comments are welcome as issues. The companion control
 text for assessors is *Authority Provenance: Standing of Delegated Authority
 Behind Non-Person Actor Actions*, v0.3, doi:10.5281/zenodo.23105657.
 
